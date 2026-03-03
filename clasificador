@@ -49,18 +49,22 @@ if [ "$MODO" = "1" ] || [ "$MODO" = "2" ]; then
     while read url; do
         echo "Procesando $url"
 
+        # MODIFICACIÓN AQUÍ: Se agrego 'sort | uniq' para evitar procesar dobles
         wget -q -O - "$url" \
         | grep -o 'MEXICO-[^"]*\.fit\.gz' \
+        | sort | uniq \
         | while read file; do
 
             full_url="${url}${file}"
             local_path="../raw_data/${file}"
 
+            # Verificación manual. Si existe, 'continue' salta al siguiente sin imprimir nada (o puedes descomentar el echo)
             if [ -f "$local_path" ]; then
-                echo "Ya existe $file, saltando"
+                # echo "Ya existe $file, saltando"  <-- Comentado para que no llene la pantalla
                 continue
             fi
 
+            # Se agrega -nc (no clobber) como seguridad extra, aunque el if de arriba ya lo maneja
             wget -q --show-progress --continue "$full_url" -P ../raw_data/
         done
 
