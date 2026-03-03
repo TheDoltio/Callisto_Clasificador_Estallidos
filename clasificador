@@ -1,6 +1,5 @@
 #!/bin/bash
 
-sudo apt install python$(python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")-venv
 cd src
 
 ENV_NAME=".clas"
@@ -8,6 +7,8 @@ ENV_NAME=".clas"
 if [ ! -d "$ENV_NAME" ]; then
     echo "No se encontró el entorno virtual $ENV_NAME. Creándolo..."
     
+    sudo apt install python$(python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")-venv
+
     python3 -m venv "$ENV_NAME"
     
     if [ $? -ne 0 ]; then

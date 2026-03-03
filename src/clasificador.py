@@ -71,11 +71,18 @@ def find_companion(primary_file, all_files, tolerance_minutes=TIME_TOLERANCE_MIN
 
         station, dt = res
 
-        if station != primary_station:
-            time_diff = abs(dt - primary_dt)
-            time_diff = min(time_diff, timedelta(days=1) - time_diff)
-            if time_diff <= tolerance:
-                candidates.append(f)
+        if station == primary_station:
+            continue
+
+        # Deben ser del mismo día
+        if dt.date() != primary_dt.date():
+            continue
+
+        # Diferencia de tiempo simple, sin ajuste de medianoche
+        time_diff = abs(dt - primary_dt)
+
+        if time_diff <= tolerance:
+            candidates.append(f)
 
     if not candidates:
         return None
