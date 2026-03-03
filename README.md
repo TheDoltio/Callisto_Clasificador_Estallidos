@@ -120,7 +120,3 @@ En sistemas Linux puede ser necesario instalar:
 sudo apt install python3-tk
 ```
 para el funcionamiento de la interfaz gráfica.
-
-La estructura actual permite extender el proyecto fácilmente
-(atajos de teclado, conteo de progreso, deshacer clasificación,
-integración directa con clúster, etc.).
